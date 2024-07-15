@@ -29,7 +29,7 @@ XCStringsEditor is an **editor** built with pure SwiftUI that can edit the **.xc
 
 ## This Fork
 - Manual translation features
-![XCStringsEditor](ForkFeatures.png =250x)
+<img src="ForkFeatures.png" width="250"  />
 
 ## Plans
 - [ ] Open with .xcodeproj file.
