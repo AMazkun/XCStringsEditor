@@ -27,12 +27,14 @@ XCStringsEditor is an **editor** built with pure SwiftUI that can edit the **.xc
 - Flag "Needs Work" or "Translate Later".
 - Show/Hide "Needs Work" and "Translate Later" flagged items.
 
+## This Fork
+- Manual translation features
+
 ## Plans
 - [ ] Open with .xcodeproj file.
 - [ ] Add/Remove plural variations.
 - [ ] Add/Remove device variations.
 - [ ] Support multiple files.
-
  
 ## License
 

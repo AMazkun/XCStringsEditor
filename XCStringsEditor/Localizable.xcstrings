@@ -162,10 +162,19 @@
     "Copy from Source Text" : {
 
     },
+    "Copy Keys" : {
+
+    },
+    "Copy Source" : {
+
+    },
     "Copy Source and Translation Text" : {
 
     },
     "Copy Source Text" : {
+
+    },
+    "Copy Translated" : {
 
     },
     "Copy Translation" : {
@@ -294,6 +303,9 @@
     "Malay" : {
 
     },
+    "Manual Translation" : {
+
+    },
     "Many" : {
 
     },
@@ -371,6 +383,12 @@
 
     },
     "Other" : {
+
+    },
+    "Paste Retranslation" : {
+
+    },
+    "Paste Translated" : {
 
     },
     "Polish" : {

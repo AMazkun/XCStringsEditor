@@ -35,6 +35,17 @@ struct Filter {
     }
 }
 
+fileprivate let expStrLeftSeparator = "["
+fileprivate let expStrRightSepareatorN = "]\n"
+fileprivate let expStrRightSepareatorRN = "]\r\n"
+
+enum ManualExpSets {
+    case keys
+    case sourceString
+    case translated
+    case revers
+}
+
 @Observable
 class XCStringsModel {
 
@@ -122,6 +133,57 @@ class XCStringsModel {
 ////                self?.debouncedSearchText = String(value)
 //            }
 //            .store(in: &cancellables)
+    }
+    
+    
+    func copyKeys(_ source : ManualExpSets) -> String {
+        var res = ""
+        let items = self.localizeItems
+        var line = 0
+        for item in items {
+            switch source {
+            case .keys :
+                res += String(format: "%04d", line) + expStrLeftSeparator + item.key + expStrRightSepareatorN
+            case .sourceString :
+                    res += String(format: "%04d", line) + expStrLeftSeparator + item.sourceString + expStrRightSepareatorN
+            case .translated:
+                res += String(format: "%04d", line) + expStrLeftSeparator + (item.translation ?? "") + expStrRightSepareatorRN
+            default: return ""
+            }
+            line += 1
+        }
+        
+        return res
+    }
+
+    func pasteLocalization(read : String, _ source : ManualExpSets) {
+        let translatedStringsN = read.components(separatedBy: expStrRightSepareatorN)
+        let translatedStringsRN = read.components(separatedBy: expStrRightSepareatorRN)
+        
+        let translatedStrings = (translatedStringsRN.count > 1) ? translatedStringsRN : translatedStringsN
+        
+        let items = self.localizeItems
+        if translatedStrings.count != items.count {
+            print(#function, "NOT SAME count translatedStrings: \(translatedStrings.count) != items: \(items.count)")
+            return
+        }
+        
+        var line = 0
+        for index in 0..<items.count {
+            let translatedKey = String(translatedStrings[index]).components(separatedBy: expStrLeftSeparator)
+            let getLine = Int(translatedKey[0]) ?? -1
+            // print("\(translatedKey[0]) \(getLine != line ? "ERROR" : "|") items[index] \(items[index].sourceString.prefix(20)) | translatedKey:\(translatedKey[1].prefix(20))")
+            line = getLine == -1 ?  line : getLine
+            line += 1
+            switch source {
+            case .translated :
+                items[index].translation = translatedKey[1]
+            case .revers :
+                items[index].reverseTranslation = translatedKey[1]
+            default : return
+            }
+        }
+        self.reloadData()
     }
     
     func load(file: URL) {

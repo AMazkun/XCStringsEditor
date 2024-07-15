@@ -162,6 +162,61 @@ struct ContentView: View {
                         
                         Spacer()
                         
+                        // !- Manual translation menu
+                        Menu {
+                            Button {
+                                let stringToCopy = stringsModel.copyKeys(.sourceString)
+                                let pasteboard = NSPasteboard.general
+                                pasteboard.clearContents()
+                                pasteboard.setString(stringToCopy, forType: .string)
+                                
+                            } label: {
+                                Label("Copy Source", systemImage: "doc.on.doc")
+                            }
+                            
+                            Button {
+                                let stringToCopy = stringsModel.copyKeys(.keys)
+                                let pasteboard = NSPasteboard.general
+                                pasteboard.clearContents()
+                                pasteboard.setString(stringToCopy, forType: .string)
+                                
+                            } label: {
+                                Label("Copy Keys", systemImage: "doc.on.doc.fill")
+                            }
+                            
+                            Button {
+                                if let read = NSPasteboard.general.string(forType: .string) {
+                                    stringsModel.pasteLocalization(read: read, .translated)
+                                }
+                                
+                            } label: {
+                                Label("Paste Translated", systemImage: "doc.on.clipboard")
+                            }
+                            
+                            Divider()
+                            
+                            Button {
+                                let stringToCopy = stringsModel.copyKeys(.translated)
+                                let pasteboard = NSPasteboard.general
+                                pasteboard.clearContents()
+                                pasteboard.setString(stringToCopy, forType: .string)
+                                
+                            } label: {
+                                Label("Copy Translated", systemImage: "arrow.up.doc.on.clipboard")
+                            }
+                            
+                            Button {
+                                if let read = NSPasteboard.general.string(forType: .string) {
+                                    stringsModel.pasteLocalization(read: read, .revers)
+                                }
+                                
+                            } label: {
+                                Label("Paste Retranslation", systemImage: "list.bullet.rectangle.portrait.fill")
+                            }
+                            
+                        } label: {
+                            Label("Manual Translation", systemImage: "hand.raised")
+                        }
                         Menu {
                             Button {
                                 stringsModel.filter.reset()
